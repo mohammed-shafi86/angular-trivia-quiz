@@ -1,0 +1,26 @@
+<h1>QUIZ MAKER</h1>
+<section>
+  <section class="quiz-filter">
+    <select (change)="setCategory(category)" #category id="categorySelect">
+      <option value="-1">Select a Category</option>
+      <option *ngFor="let cat of listOfCategories" [value]="cat.id">
+        {{ cat.name }}
+      </option>
+    </select>
+
+    <select
+      (change)="setDifficulty(difficulty)"
+      #difficulty
+      id="difficultySelect"
+    >
+      <option value="">Select difficulty</option>
+      <option *ngFor="let diff of listOfDifficulty" [value]="diff">
+        {{ diff }}
+      </option>
+    </select>
+    <button id="createBtn" (click)="onSubmit()">Create</button>
+  </section>
+  <ng-container *ngIf="!!selectedQuest">
+    <section class="quiz-questions">here is the questions</section>
+  </ng-container>
+</section>
