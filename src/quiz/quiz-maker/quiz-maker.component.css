@@ -11,10 +11,40 @@ h1 {
   align-items: center;
 }
 
-.quiz-questions {
+.quiz-questions-wrapper {
   width: 70%;
-  height: auto;
+  height: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.quiz-sets {
+  margin: 10px;
+}
+
+.quiz-question {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.quiz-answers {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  padding-left: 5px;
+}
+
+.quiz-answers button {
+  border: 1px solid rgb(32 145 112 / 51%);
+  border-radius: 7px;
+  padding: 2px 5px;
+  margin: 5px 5px 0px 5px;
+  color: #008000ba;
 }

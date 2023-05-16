@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { quizCategory, quizQuestion } from '../quiz-model';
+import { quizAnswer, quizCategory, quizQuestion } from '../quiz-model';
 
 @Injectable()
 export class QuizServiceService {
@@ -24,7 +24,21 @@ export class QuizServiceService {
     const questURL = `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=multiple`;
     return this.http.get<quizQuestion[]>(questURL).pipe(
       map((response: any) => {
-        return response.results;
+        let quiz: quizQuestion[];
+        quiz = response.results.map((q: quizQuestion) => {
+          let ans: quizAnswer[] = [];
+          ans.push({
+            answer: q.correct_answer,
+            isCorrect: true,
+            isSelected: false,
+          });
+          q.incorrect_answers.map((inc: string) => {
+            ans.push({ answer: inc, isCorrect: false, isSelected: false });
+          });
+          q = { ...q, quizAns: ans };
+          return q;
+        });
+        return quiz;
       })
     );
   }
