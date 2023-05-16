@@ -8,7 +8,7 @@ export const routes: Route[] = [
     component: QuizMakerComponent,
   },
   {
-    path: ':id',
+    path: 'result',
     component: QuizResultComponent,
   },
   {

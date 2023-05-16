@@ -22,19 +22,21 @@
   </section>
   <ng-container *ngIf="selectedQuest.length > 0">
     <section class="quiz-questions-wrapper">
-      <div *ngFor="let quiz of selectedQuest" class="quiz-sets">
+      <div *ngFor="let quiz of selectedQuest; index as q" class="quiz-sets">
         <span class="quiz-question" [innerHTML]="quiz.question"></span>
         <div class="quiz-answers">
           <button
-            *ngFor="let ans of quiz.quizAns; index as i;"
+            *ngFor="let ans of quiz.quizAns; index as a"
             [innerHTML]="ans.answer"
-            (click)="updateAnswer(quiz, ans, i)"
+            (click)="updateAnswer(quiz, ans, a, selectedQuest, q)"
           ></button>
         </div>
       </div>
     </section>
   </ng-container>
   <section class="quiz-submit">
-    <button id="submitBtn" (click)="onSubmit()"> Submit</button>
+    <button id="submitBtn" (click)="onSubmit()" *ngIf="showSubmitBtn">
+      Submit
+    </button>
   </section>
 </section>

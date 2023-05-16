@@ -26,9 +26,11 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
     id: -1,
     difficulty: '',
   };
+  showSubmitBtn!: boolean;
 
   ngOnInit() {
     this.selectedQuest = [];
+    this.showSubmitBtn = false;
     this.listOfCategoriesSubs$ = this.quizServiceService
       .loadCategory()
       .subscribe((data) => {
@@ -71,10 +73,16 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
       });
   }
 
-  updateAnswer(quiz: quizQuestion, ans: quizAnswer, ind: number): void {
+  updateAnswer(
+    quiz: quizQuestion,
+    ans: quizAnswer,
+    ansIndex: number,
+    questionSet: quizQuestion[],
+    quesIndex: number
+  ): void {
     let answerSet: quizAnswer[] = quiz.quizAns || [];
     answerSet.map((q, i) => {
-      if (i !== ind) {
+      if (i !== ansIndex) {
         q.isSelected = false;
       } else {
         q.isSelected = true;
@@ -83,12 +91,32 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
     });
 
     quiz = { ...quiz, quizAns: answerSet };
+    questionSet[quesIndex] = quiz;
     console.log(quiz);
     console.log(ans);
+    this.selectedQuest = Object.assign([], questionSet);
+    this.toggleSubmitBtn(this.selectedQuest);
   }
 
   onSubmit(): void {
-    console.log('redirect on result page');
+    this.quizServiceService.setSelectedQuest(this.selectedQuest);
+  }
+
+  toggleSubmitBtn(quiz: quizQuestion[]): void {
+    this.showSubmitBtn = false;
+    let ansTrack: number = 0;
+    quiz.map((question: quizQuestion) => {
+      let qAns = question.quizAns || [];
+      qAns.map((qa) => {
+        if (qa.isSelected === true) {
+          ansTrack++;
+        }
+      });
+    });
+    console.log(ansTrack);
+    if(ansTrack === 5) {
+      this.showSubmitBtn = true;
+    }
   }
 
   ngOnDestroy() {

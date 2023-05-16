@@ -49,8 +49,9 @@ export class QuizServiceService {
   //set the selectedQuest
   setSelectedQuest(questObj: quizQuestion[]) {
     this.selectedQuest = questObj;
+    console.log(this.selectedQuest);
+    console.log('redirect on result page');
   }
-
 
   //Shuffel the Array of object
   shuffelArray(arr: any[]) {
