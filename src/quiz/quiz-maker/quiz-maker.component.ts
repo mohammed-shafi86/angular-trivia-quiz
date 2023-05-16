@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { quizAnswer, quizCategory, quizQuestion } from '../quiz-model';
 import { QuizServiceService } from '../services/quiz-service.service';
@@ -41,12 +42,10 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
   }
 
   setCategory(cat: HTMLSelectElement): void {
-    console.log(cat.value);
     this.selectedQuestion.id = Number(cat.value);
   }
 
   setDifficulty(diff: HTMLSelectElement): void {
-    console.log(diff.value);
     this.selectedQuestion.difficulty = diff.value;
   }
 
@@ -100,6 +99,7 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.quizServiceService.setSelectedQuest(this.selectedQuest);
+    // this.route.navigate(['result']);
   }
 
   toggleSubmitBtn(quiz: quizQuestion[]): void {
@@ -114,7 +114,7 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
       });
     });
     console.log(ansTrack);
-    if(ansTrack === 5) {
+    if (ansTrack === 5) {
       this.showSubmitBtn = true;
     }
   }

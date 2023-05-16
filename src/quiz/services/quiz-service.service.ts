@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { map, Observable, of } from 'rxjs';
 import { quizAnswer, quizCategory, quizQuestion } from '../quiz-model';
 
 @Injectable()
 export class QuizServiceService {
   private selectedQuest!: quizQuestion[];
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private route: Router) {}
 
   //Load category from API
   loadCategory(): Observable<quizCategory[]> {
@@ -49,8 +50,12 @@ export class QuizServiceService {
   //set the selectedQuest
   setSelectedQuest(questObj: quizQuestion[]) {
     this.selectedQuest = questObj;
-    console.log(this.selectedQuest);
-    console.log('redirect on result page');
+    this.route.navigate(['result']);
+  }
+
+  //set the selectedQuest
+  getQuest(): Observable<quizQuestion[]> {
+    return of(this.selectedQuest);
   }
 
   //Shuffel the Array of object

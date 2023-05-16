@@ -15,7 +15,7 @@ export class QuizResultComponent implements OnInit {
   constructor(private quizServiceService: QuizServiceService) {}
 
   ngOnInit() {
-    this.quizServiceService.loadQuestions(10, 'easy').subscribe((data) => {
+    this.quizServiceService.getQuest().subscribe((data) => {
       console.log(data);
     });
   }
