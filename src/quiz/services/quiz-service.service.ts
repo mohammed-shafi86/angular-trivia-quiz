@@ -5,6 +5,7 @@ import { quizAnswer, quizCategory, quizQuestion } from '../quiz-model';
 
 @Injectable()
 export class QuizServiceService {
+  private selectedQuest!: quizQuestion[];
   constructor(private http: HttpClient) {}
 
   //Load category from API
@@ -44,6 +45,12 @@ export class QuizServiceService {
       })
     );
   }
+
+  //set the selectedQuest
+  setSelectedQuest(questObj: quizQuestion[]) {
+    this.selectedQuest = questObj;
+  }
+
 
   //Shuffel the Array of object
   shuffelArray(arr: any[]) {

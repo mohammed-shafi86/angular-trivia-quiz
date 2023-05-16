@@ -18,7 +18,7 @@
         {{ diff }}
       </option>
     </select>
-    <button id="createBtn" (click)="onSubmit()">Create</button>
+    <button id="createBtn" (click)="onCreate()">Create</button>
   </section>
   <ng-container *ngIf="selectedQuest.length > 0">
     <section class="quiz-questions-wrapper">
@@ -34,4 +34,7 @@
       </div>
     </section>
   </ng-container>
+  <section class="quiz-submit">
+    <button id="submitBtn" (click)="onSubmit()"> Submit</button>
+  </section>
 </section>

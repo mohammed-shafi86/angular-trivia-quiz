@@ -48,7 +48,7 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
     this.selectedQuestion.difficulty = diff.value;
   }
 
-  onSubmit(): void {
+  onCreate(): void {
     this.selectedQuest = [];
     if (
       this.selectedQuestion.id === -1 ||
@@ -85,6 +85,10 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
     quiz = { ...quiz, quizAns: answerSet };
     console.log(quiz);
     console.log(ans);
+  }
+
+  onSubmit(): void {
+    console.log('redirect on result page');
   }
 
   ngOnDestroy() {

@@ -24,6 +24,10 @@ h1 {
   margin: 10px;
 }
 
+.quiz-sets span {
+  font-size: 14px;
+}
+
 .quiz-question {
   display: flex;
   flex-direction: column;
@@ -47,4 +51,21 @@ h1 {
   padding: 2px 5px;
   margin: 5px 5px 0px 5px;
   color: #008000ba;
+}
+
+.quiz-submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 75%;
+}
+
+.quiz-submit button {
+  background-color: #00000087;
+  color: white;
+  width: 82%;
+  margin-top: 20px;
+  padding: 5px;
+  border-radius: 10px;
+  border: 1px solid #00000087;
 }
