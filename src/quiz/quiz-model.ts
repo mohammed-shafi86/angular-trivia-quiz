@@ -10,6 +10,11 @@ export interface quizQuestion {
   question: string;
   correct_answer: string;
   incorrect_answers: string[];
+  quizAns?: quizAnswer[];
 }
 
-
+export interface quizAnswer {
+  answer: string;
+  isSelected: boolean;
+  isCorrect: boolean;
+}
