@@ -26,9 +26,9 @@
         <span class="quiz-question" [innerHTML]="quiz.question"></span>
         <div class="quiz-answers">
           <button
-            *ngFor="let ans of quiz.quizAns"
+            *ngFor="let ans of quiz.quizAns; index as i;"
             [innerHTML]="ans.answer"
-            (click)="updateAnswer(quiz, ans)"
+            (click)="updateAnswer(quiz, ans, i)"
           ></button>
         </div>
       </div>

@@ -71,7 +71,18 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
       });
   }
 
-  updateAnswer(quiz: quizQuestion, ans: quizAnswer): void {
+  updateAnswer(quiz: quizQuestion, ans: quizAnswer, ind: number): void {
+    let answerSet: quizAnswer[] = quiz.quizAns || [];
+    answerSet.map((q, i) => {
+      if (i !== ind) {
+        q.isSelected = false;
+      } else {
+        q.isSelected = true;
+      }
+      return q;
+    });
+
+    quiz = { ...quiz, quizAns: answerSet };
     console.log(quiz);
     console.log(ans);
   }

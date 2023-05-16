@@ -35,11 +35,15 @@ export class QuizServiceService {
           q.incorrect_answers.map((inc: string) => {
             ans.push({ answer: inc, isCorrect: false, isSelected: false });
           });
-          q = { ...q, quizAns: ans };
+          q = { ...q, quizAns: this.shuffelArray(ans) };
           return q;
         });
-        return quiz;
+        return this.shuffelArray(quiz);
       })
     );
+  }
+
+  shuffelArray(arr: any[]) {
+    return arr.sort(() => Math.random() - 0.5);
   }
 }
