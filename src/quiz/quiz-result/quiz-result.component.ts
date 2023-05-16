@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subscription, switchMap } from 'rxjs';
+import { quizQuestion } from '../quiz-model';
 import { QuizServiceService } from '../services/quiz-service.service';
 
 @Component({
@@ -12,11 +15,21 @@ import { QuizServiceService } from '../services/quiz-service.service';
   providers: [QuizServiceService],
 })
 export class QuizResultComponent implements OnInit {
+  selectedQuest!: quizQuestion[];
   constructor(private quizServiceService: QuizServiceService) {}
 
+  selectedQuest$!: Observable<quizQuestion[]>;
   ngOnInit() {
     this.quizServiceService.getQuest().subscribe((data) => {
-      console.log(data);
+      // debugger;
+      if (data) {
+        this.selectedQuest = data;
+        console.log(this.selectedQuest);
+      }
     });
+    // console.log(this.selectedQuest);
+    // this.quizServiceService.getQuest().subscribe((data) => {
+    //   console.log(data);
+    // });
   }
 }

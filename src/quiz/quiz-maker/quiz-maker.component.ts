@@ -16,7 +16,7 @@ import { QuizServiceService } from '../services/quiz-service.service';
   providers: [QuizServiceService],
 })
 export class QuizMakerComponent implements OnInit, OnDestroy {
-  constructor(private quizServiceService: QuizServiceService) {}
+  constructor(private quizServiceService: QuizServiceService,private router: Router) {}
 
   listOfCategoriesSubs$ = new Subscription();
   questionsSubs$ = new Subscription();
@@ -99,7 +99,12 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.quizServiceService.setSelectedQuest(this.selectedQuest);
-    // this.route.navigate(['result']);
+    // this.router.navigate(['result']);
+    // this.router.navigate(['result'], {
+    //   state:{
+    //     quizResult: this.selectedQuest
+    //   }
+    // });
   }
 
   toggleSubmitBtn(quiz: quizQuestion[]): void {
