@@ -98,7 +98,8 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    this.quizServiceService.setSelectedQuest(this.selectedQuest);
+    this.router.navigateByUrl('result',{state: {data: this.selectedQuest}});
+   // this.quizServiceService.setSelectedQuest(this.selectedQuest);
     // this.router.navigate(['result']);
     // this.router.navigate(['result'], {
     //   state:{

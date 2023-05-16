@@ -16,17 +16,19 @@ import { QuizServiceService } from '../services/quiz-service.service';
 })
 export class QuizResultComponent implements OnInit {
   selectedQuest!: quizQuestion[];
-  constructor(private quizServiceService: QuizServiceService) {}
+  constructor(private quizServiceService: QuizServiceService, private router:Router, private activeRoute: ActivatedRoute) {
+console.log(this.router.getCurrentNavigation());
+  }
 
   selectedQuest$!: Observable<quizQuestion[]>;
   ngOnInit() {
-    this.quizServiceService.getQuest().subscribe((data) => {
+    /*this.quizServiceService.getQuest().subscribe((data) => {
       // debugger;
       if (data) {
         this.selectedQuest = data;
         console.log(this.selectedQuest);
       }
-    });
+    });*/
     // console.log(this.selectedQuest);
     // this.quizServiceService.getQuest().subscribe((data) => {
     //   console.log(data);
