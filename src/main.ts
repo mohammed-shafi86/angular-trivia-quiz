@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter, RouterOutlet } from '@angular/router';
-import { routes } from './quiz/quiz.routes';
+import { routes } from './app/quiz.routes';
+
 @Component({
   selector: 'my-app',
   standalone: true,
