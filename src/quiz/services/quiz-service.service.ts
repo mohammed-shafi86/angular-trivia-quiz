@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, map, Observable, of, Subject } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { quizAnswer, quizCategory, quizQuestion } from '../quiz-model';
 
 @Injectable()
 export class QuizServiceService {
   selectedQuest!: quizQuestion[];
-  private selectedQuestObs$ = new BehaviorSubject<quizQuestion[] | null>(null);
   constructor(private http: HttpClient, private route: Router) {}
 
   //Load category from API
@@ -48,17 +47,28 @@ export class QuizServiceService {
     );
   }
 
-  //set the selectedQuest
-  setSelectedQuest(questObj: quizQuestion[]) {
-    this.selectedQuest = questObj;
-    this.selectedQuestObs$.next(questObj);
-    this.route.navigate(['result']);
+  //verify answer and redirect to 'result' page with score and selected questions and answer
+  verifyAndSubmitQuest(questObj: quizQuestion[]) {
+    const finalScore = this.calculateScore(questObj);
+    this.route.navigateByUrl('result', {
+      state: { quiz: questObj, score: finalScore },
+    });
   }
 
-  //set the selectedQuest
-  getQuest(): Observable<quizQuestion[] | null> {
-    // return of(this.selectedQuest);
-    return this.selectedQuestObs$.asObservable();
+  // Calculate score if both flag 'isSelected' & 'isCorrect' are ture
+  calculateScore(questObj: quizQuestion[]): number {
+    const score =
+      questObj
+        .map((q) => {
+          return {
+            ...q,
+            quizAns: q.quizAns?.filter(
+              (ans) => ans.isCorrect === true && ans.isSelected === true
+            ),
+          };
+        })
+        ?.filter((x) => x.quizAns?.length !== 0)?.length || 0;
+    return score;
   }
 
   //Shuffel the Array of object

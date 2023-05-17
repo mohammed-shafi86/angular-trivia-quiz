@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { quizAnswer, quizCategory, quizQuestion } from '../quiz-model';
 import { QuizServiceService } from '../services/quiz-service.service';
@@ -16,13 +15,13 @@ import { QuizServiceService } from '../services/quiz-service.service';
   providers: [QuizServiceService],
 })
 export class QuizMakerComponent implements OnInit, OnDestroy {
-  constructor(private quizServiceService: QuizServiceService,private router: Router) {}
+  constructor(private quizServiceService: QuizServiceService) {}
 
   listOfCategoriesSubs$ = new Subscription();
   questionsSubs$ = new Subscription();
   listOfCategories!: quizCategory[];
   selectedQuest!: quizQuestion[];
-  listOfDifficulty: string[] = ['easy', 'medium', 'hard'];
+  listOfDifficulty: string[] = ['Easy', 'Medium', 'Hard'];
   selectedQuestion = {
     id: -1,
     difficulty: '',
@@ -36,8 +35,6 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
       .loadCategory()
       .subscribe((data) => {
         this.listOfCategories = data;
-        console.log(this.listOfCategories);
-        // console.log(this.listOfDifficulty);
       });
   }
 
@@ -59,7 +56,7 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
     }
     this.getQuestions(
       this.selectedQuestion.id,
-      this.selectedQuestion.difficulty
+      this.selectedQuestion.difficulty.toLocaleLowerCase()
     );
   }
 
@@ -68,13 +65,11 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
       .loadQuestions(category, difficulty)
       .subscribe((data) => {
         this.selectedQuest = data;
-        console.log(this.selectedQuest);
       });
   }
 
   updateAnswer(
     quiz: quizQuestion,
-    ans: quizAnswer,
     ansIndex: number,
     questionSet: quizQuestion[],
     quesIndex: number
@@ -91,21 +86,12 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
 
     quiz = { ...quiz, quizAns: answerSet };
     questionSet[quesIndex] = quiz;
-    console.log(quiz);
-    console.log(ans);
     this.selectedQuest = Object.assign([], questionSet);
     this.toggleSubmitBtn(this.selectedQuest);
   }
 
   onSubmit(): void {
-    this.router.navigateByUrl('result',{state: {data: this.selectedQuest}});
-   // this.quizServiceService.setSelectedQuest(this.selectedQuest);
-    // this.router.navigate(['result']);
-    // this.router.navigate(['result'], {
-    //   state:{
-    //     quizResult: this.selectedQuest
-    //   }
-    // });
+    this.quizServiceService.verifyAndSubmitQuest(this.selectedQuest);
   }
 
   toggleSubmitBtn(quiz: quizQuestion[]): void {
@@ -119,7 +105,6 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
         }
       });
     });
-    console.log(ansTrack);
     if (ansTrack === 5) {
       this.showSubmitBtn = true;
     }

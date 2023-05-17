@@ -1,37 +1,29 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription, switchMap } from 'rxjs';
-import { quizQuestion } from '../quiz-model';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { quizResult } from '../quiz-model';
 import { QuizServiceService } from '../services/quiz-service.service';
+import { SharedModuleModule } from '../shared/modules/shared-module/shared-module.module';
 
 @Component({
   selector: 'app-quiz-result',
   standalone: true,
   templateUrl: './quiz-result.component.html',
   styleUrls: ['./quiz-result.component.css'],
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, SharedModuleModule],
   providers: [QuizServiceService],
 })
-export class QuizResultComponent implements OnInit {
-  selectedQuest!: quizQuestion[];
-  constructor(private quizServiceService: QuizServiceService, private router:Router, private activeRoute: ActivatedRoute) {
-console.log(this.router.getCurrentNavigation());
+export class QuizResultComponent {
+  selectedQuizQuest!: quizResult[];
+  score!: number;
+  constructor(private router: Router) {
+    this.selectedQuizQuest =
+      this.router.getCurrentNavigation()?.extras.state?.quiz;
+    this.score = this.router.getCurrentNavigation()?.extras.state?.score;
   }
 
-  selectedQuest$!: Observable<quizQuestion[]>;
-  ngOnInit() {
-    /*this.quizServiceService.getQuest().subscribe((data) => {
-      // debugger;
-      if (data) {
-        this.selectedQuest = data;
-        console.log(this.selectedQuest);
-      }
-    });*/
-    // console.log(this.selectedQuest);
-    // this.quizServiceService.getQuest().subscribe((data) => {
-    //   console.log(data);
-    // });
+  redirect(path: string): void {
+    this.router.navigate([path]);
   }
 }

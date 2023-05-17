@@ -1,7 +1,12 @@
 <h1>QUIZ MAKER</h1>
 <section>
   <section class="quiz-filter">
-    <select (change)="setCategory(category)" #category id="categorySelect">
+    <select
+      (change)="setCategory(category)"
+      #category
+      id="categorySelect"
+      class="quiz-select-category"
+    >
       <option value="-1">Select a Category</option>
       <option *ngFor="let cat of listOfCategories" [value]="cat.id">
         {{ cat.name }}
@@ -12,6 +17,7 @@
       (change)="setDifficulty(difficulty)"
       #difficulty
       id="difficultySelect"
+      class="quiz-select-difficulty"
     >
       <option value="">Select difficulty</option>
       <option *ngFor="let diff of listOfDifficulty" [value]="diff">
@@ -26,9 +32,11 @@
         <span class="quiz-question" [innerHTML]="quiz.question"></span>
         <div class="quiz-answers">
           <button
+            [id]="'answerBtn' + q + a"
             *ngFor="let ans of quiz.quizAns; index as a"
+            [ngClass]="ans.isSelected === true ? 'isSelected' : ''"
             [innerHTML]="ans.answer"
-            (click)="updateAnswer(quiz, ans, a, selectedQuest, q)"
+            (click)="updateAnswer(quiz, a, selectedQuest, q)"
           ></button>
         </div>
       </div>

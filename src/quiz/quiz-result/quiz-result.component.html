@@ -1,3 +1,26 @@
-<p>
-quiz-result works!
-</p>
+<h1>RESULTS</h1>
+<section>
+  <ng-container *ngIf="selectedQuizQuest.length > 0">
+    <section class="quiz-questions-wrapper">
+      <div *ngFor="let quiz of selectedQuizQuest; index as q" class="quiz-sets">
+        <span class="quiz-question" [innerHTML]="quiz.question"></span>
+        <div class="quiz-answers">
+          <button
+            *ngFor="let ans of quiz.quizAns; index as a"
+            [innerHTML]="ans.answer"
+            [ngClass]="{
+              green:
+                (ans.isSelected === true && ans.isCorrect === true) ||
+                ans.isCorrect === true,
+              red: ans.isSelected === true && ans.isCorrect === false
+            }"
+          ></button>
+        </div>
+      </div>
+      <p [appQuizScoreHighlight]="score">You scored {{ score }} out of 5</p>
+    </section>
+  </ng-container>
+  <section class="quiz-submit">
+    <button id="redirectBtn" (click)="redirect('')">Create a new quiz</button>
+  </section>
+</section>

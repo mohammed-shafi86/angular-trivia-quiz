@@ -18,3 +18,8 @@ export interface quizAnswer {
   isSelected: boolean;
   isCorrect: boolean;
 }
+
+export interface quizResult {
+  question: string;
+  quizAns: quizAnswer[];
+}
