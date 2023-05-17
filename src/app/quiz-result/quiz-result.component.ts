@@ -3,7 +3,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { quizResult } from '../quiz-model';
-import { QuizServiceService } from '../services/quiz-service.service';
 import { SharedModuleModule } from '../shared/modules/shared-module/shared-module.module';
 
 @Component({
@@ -12,7 +11,6 @@ import { SharedModuleModule } from '../shared/modules/shared-module/shared-modul
   templateUrl: './quiz-result.component.html',
   styleUrls: ['./quiz-result.component.css'],
   imports: [CommonModule, HttpClientModule, SharedModuleModule],
-  providers: [QuizServiceService],
 })
 export class QuizResultComponent {
   selectedQuizQuest!: quizResult[];

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { quizAnswer, quizCategory, quizQuestion } from '../quiz-model';
 import { QuizServiceService } from '../services/quiz-service.service';
@@ -11,7 +10,7 @@ import { QuizServiceService } from '../services/quiz-service.service';
   standalone: true,
   templateUrl: './quiz-maker.component.html',
   styleUrls: ['./quiz-maker.component.css'],
-  imports: [CommonModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, HttpClientModule],
   providers: [QuizServiceService],
 })
 export class QuizMakerComponent implements OnInit, OnDestroy {
