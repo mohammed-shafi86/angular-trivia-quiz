@@ -7,6 +7,7 @@
         <div class="quiz-answers">
           <button
             *ngFor="let ans of quiz.quizAns; index as a"
+            [id]="'answerBtn' + q + a"
             [innerHTML]="ans.answer"
             [ngClass]="{
               green:
