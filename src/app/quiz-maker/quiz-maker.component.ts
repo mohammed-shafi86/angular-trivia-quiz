@@ -27,6 +27,7 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
     difficulty: '',
   };
   showSubmitBtn!: boolean;
+  showFilter!: boolean;
 
   ngOnInit() {
     this.selectedQuest = [];
@@ -34,18 +35,29 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
     this.listOfCategoriesSubs$ = this.quizServiceService
       .loadCategory()
       .subscribe((data) => {
-        this.listOfCategories = data;
+        if (data) {
+          this.listOfCategories = data;
+          this.showForm();
+        }
       });
   }
 
+  //set the 'showFilter' to ture once 'category' is loaded
+  showForm() {
+    this.showFilter = true;
+  }
+
+  //set the category id for questions set
   setCategory(cat: HTMLSelectElement): void {
     this.selectedQuestion.id = Number(cat.value);
   }
 
+  //set the difficulty for questions set
   setDifficulty(diff: HTMLSelectElement): void {
     this.selectedQuestion.difficulty = diff.value;
   }
 
+  // perform validation on 'Create' button click event for passing both 'category' & 'difficulty' value to 'getQuestions' function
   onCreate(): void {
     this.selectedQuest = [];
     if (
@@ -60,6 +72,7 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
     );
   }
 
+  //call the service method 'loadQuestions' with 'category' and 'difficulty' to get Questions Set
   getQuestions(category: number, difficulty: string): void {
     this.questionsSubs$ = this.quizServiceService
       .loadQuestions(category, difficulty)
@@ -68,6 +81,7 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
       });
   }
 
+  //update the 'isSelected' to true for the selected answer button and show the 'Submit' button once all questions selected
   updateAnswer(
     quiz: quizQuestion,
     ansIndex: number,
@@ -90,10 +104,12 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
     this.toggleSubmitBtn(this.selectedQuest);
   }
 
+  //Call the service 'verifyAndSubmitQuest' method with all the questions set
   onSubmit(): void {
     this.quizServiceService.verifyAndSubmitQuest(this.selectedQuest);
   }
 
+  //Set the 'showSubmitBtn' to true once count of selected question is 5
   toggleSubmitBtn(quiz: quizQuestion[]): void {
     this.showSubmitBtn = false;
     let ansTrack: number = 0;
@@ -110,6 +126,7 @@ export class QuizMakerComponent implements OnInit, OnDestroy {
     }
   }
 
+  //unsubscribe both the subscription
   ngOnDestroy() {
     this.listOfCategoriesSubs$.unsubscribe();
     this.questionsSubs$.unsubscribe();

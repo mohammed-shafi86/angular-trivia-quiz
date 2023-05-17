@@ -9,7 +9,7 @@ export class QuizServiceService {
   selectedQuest!: quizQuestion[];
   constructor(private http: HttpClient, private route: Router) {}
 
-  //Load category from API
+  //Load category from API 'https://opentdb.com/api_category.php'
   loadCategory(): Observable<quizCategory[]> {
     return this.http
       .get<quizCategory[]>('https://opentdb.com/api_category.php')
@@ -20,7 +20,7 @@ export class QuizServiceService {
       );
   }
 
-  //Load questions from API by passing 'category' & 'difficulty'
+  //Load questions from API 'https://opentdb.com/api.php?amount=5&category=11&difficulty=easy&type=multiple' by passing 'category' & 'difficulty'
   loadQuestions(
     category: number,
     difficulty: string
@@ -71,7 +71,7 @@ export class QuizServiceService {
     return score;
   }
 
-  //Shuffel the Array of object
+  //Shuffel the Array of object for sorting it's array position randomaly
   shuffelArray(arr: any[]) {
     return arr.sort(() => Math.random() - 0.5);
   }

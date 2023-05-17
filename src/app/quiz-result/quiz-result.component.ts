@@ -17,12 +17,16 @@ import { SharedModuleModule } from '../shared/modules/shared-module/shared-modul
 export class QuizResultComponent {
   selectedQuizQuest!: quizResult[];
   score!: number;
+
+  //get the data from state with the help of 'router'.
+  //Note: to get data from state we need to get it inside constructor only else it will not work
   constructor(private router: Router) {
     this.selectedQuizQuest =
       this.router.getCurrentNavigation()?.extras.state?.quiz;
     this.score = this.router.getCurrentNavigation()?.extras.state?.score;
   }
 
+  // redirect to the desired path which is passed through parameter
   redirect(path: string): void {
     this.router.navigate([path]);
   }

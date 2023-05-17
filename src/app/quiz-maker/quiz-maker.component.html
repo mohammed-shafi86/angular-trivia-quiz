@@ -1,6 +1,7 @@
 <h1>QUIZ MAKER</h1>
+<span *ngIf="!showFilter">Loading...</span>
 <section>
-  <section class="quiz-filter">
+  <section class="quiz-filter" *ngIf="showFilter">
     <select
       (change)="setCategory(category)"
       #category
