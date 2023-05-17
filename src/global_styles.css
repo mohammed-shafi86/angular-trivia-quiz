@@ -48,7 +48,7 @@ h1 {
 .quiz-answers {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
   padding-left: 5px;
